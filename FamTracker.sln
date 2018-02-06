@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamTracker", "FamTracker\FamTracker.csproj", "{7F104BB5-A98D-4BAD-8985-A516A8F915D9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CBD39652-C5AF-4614-B51C-86AF69A048E6}"
+	ProjectSection(SolutionItems) = preProject
+		FamTracker.sln = FamTracker.sln
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
