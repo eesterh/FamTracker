@@ -9,7 +9,7 @@ namespace FamTracker
     public partial class ViewController : NSViewController
     {
         Timer MainTimer;
-        int TimeLeft = 1500;
+        int TimeLeft = 0; // seconds
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -19,12 +19,11 @@ namespace FamTracker
         {
             base.ViewDidLoad();
 
-            // Do any additional setup after loading the view.
 
             // Fire the timer once a second
             MainTimer = new Timer(1000);
             MainTimer.Elapsed += (sender, e) => {
-                TimeLeft--;
+                TimeLeft++;
                 // Format the remaining time nicely for the label
                 TimeSpan time = TimeSpan.FromSeconds(TimeLeft);
                 string timeString = time.ToString(@"mm\:ss");
@@ -34,20 +33,21 @@ namespace FamTracker
                     TimerLabel.StringValue = timeString;
                 });
 
-                // If 25 minutes have passed
-                if (TimeLeft == 0)
+                // If 1 minutes have passed
+                if (TimeLeft == 60)
                 {
                     // Stop the timer and reset
                     MainTimer.Stop();
-                    TimeLeft = 1500;
+                    TimeLeft = 0;
                     InvokeOnMainThread(() => {
                         // Reset the UI
-                        TimerLabel.StringValue = "25:00";
+                        TimerLabel.StringValue = "0:00";
                         StartStopButton.Title = "Start";
-                        NSAlert alert = new NSAlert();
                         // Set the style and message text
+
+                        NSAlert alert = new NSAlert();
                         alert.AlertStyle = NSAlertStyle.Informational;
-                        alert.MessageText = "25 Minutes elapsed! Take a 5 minute break.";
+                        alert.MessageText = "1 Minutes elapsed! Take a minute break.";
                         // Display the NSAlert from the current view
                         alert.BeginSheet(View.Window);
                     });
