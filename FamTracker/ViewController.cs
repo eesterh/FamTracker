@@ -22,10 +22,13 @@ namespace FamTracker
 
             TimeGoal = Int32.Parse(InputSeconds.StringValue);
 
+            counter = 0;
+
             // Fire the timer once a second
             MainTimer = new Timer(1000);
             MainTimer.Elapsed += (sender, e) => {
                 counter++;
+
                 // Format the remaining time nicely for the label
                 TimeSpan time = TimeSpan.FromSeconds(counter);
                 string timeString = time.ToString(@"mm\:ss");
@@ -36,13 +39,17 @@ namespace FamTracker
                     TimerLabel.StringValue = timeString;
                 });
 
+               // ProgressBar.IncrementBy(1); - This causes the following code to be ignored.... need to figure out how to init correctly I think
+
+
                 // If goal entered has passed
                 if (TimeGoal == counter)
                 {
                     // Stop the timer and reset
                     MainTimer.Stop();
                     counter = 0;
-                    InvokeOnMainThread(() => {
+                    InvokeOnMainThread(() =>
+                    {
                         // Reset the UI
                         TimerLabel.StringValue = "0:00";
                         StartStopButton.Title = "Start";
@@ -89,21 +96,13 @@ namespace FamTracker
 
         partial void SecondsEntered(Foundation.NSObject sender)
         {
-       //     String timeEntered = InputSeconds.
-         //       .ToString();
-
-            NSAlert alert = new NSAlert();
-            alert.AlertStyle = NSAlertStyle.Informational;
-            alert.MessageText = InputSeconds.StringValue + " Entered in Field!";
-            // Display the NSAlert from the current view
-            alert.BeginSheet(View.Window);
-
-            //  TimeLeft = new Integer(timeEntered);
-
+       
+            // Update new goal
             TimeGoal = Int32.Parse(InputSeconds.StringValue);
-            TimerLabel.StringValue = TimeGoal.ToString();
+            TimerLabel.StringValue = "0:00";
 
-           // sender.ToString();
+            // Align progressbar to new 100%
+            ProgressBar.MaxValue = TimeGoal;
 
         }
 

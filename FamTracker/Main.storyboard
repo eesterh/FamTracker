@@ -718,10 +718,20 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="aTP-LT-hFd">
+                                <rect key="frame" x="12" y="251" width="461" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="NvQ-mu-8IV">
+                                <rect key="frame" x="12" y="7" width="461" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="ContProgressBar" destination="aTP-LT-hFd" id="0bZ-J2-CMD"/>
                         <outlet property="InputSeconds" destination="vkY-db-jbO" id="aEx-0n-Ycv"/>
+                        <outlet property="ProgressBar" destination="NvQ-mu-8IV" id="eWq-uS-rGW"/>
                         <outlet property="StartStopButton" destination="LYY-ve-sde" id="rKA-m9-gfg"/>
                         <outlet property="TextLabel" destination="NkA-l1-mg1" id="lzi-8F-AO6"/>
                         <outlet property="TimerLabel" destination="NkA-l1-mg1" id="E9V-CW-mGc"/>
