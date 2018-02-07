@@ -687,10 +687,32 @@
                                     <action selector="StartStopButtonClicked:" target="XfG-lQ-9wD" id="HKt-lC-ddi"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkA-l1-mg1">
-                                <rect key="frame" x="209" y="155" width="63" height="38"/>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vkY-db-jbO">
+                                <rect key="frame" x="110" y="230" width="63" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="25:00" bezelStyle="round" id="xeX-pO-oWE">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="60" drawsBackground="YES" id="Ekt-jr-RZQ">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="KVk-Xv-9El"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="SecondsEntered:" target="XfG-lQ-9wD" id="V32-Ij-Ey4"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rPc-Oj-wjC">
+                                <rect key="frame" x="10" y="233" width="113" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Input #seconds" id="kct-Mq-8EE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkA-l1-mg1">
+                                <rect key="frame" x="209" y="183" width="63" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="60" bezelStyle="round" id="xeX-pO-oWE">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -699,6 +721,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="InputSeconds" destination="vkY-db-jbO" id="aEx-0n-Ycv"/>
                         <outlet property="StartStopButton" destination="LYY-ve-sde" id="rKA-m9-gfg"/>
                         <outlet property="TextLabel" destination="NkA-l1-mg1" id="lzi-8F-AO6"/>
                         <outlet property="TimerLabel" destination="NkA-l1-mg1" id="E9V-CW-mGc"/>

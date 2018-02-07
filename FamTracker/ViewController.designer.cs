@@ -13,24 +13,35 @@ namespace FamTracker
     partial class ViewController
     {
         [Outlet]
+        AppKit.NSTextField InputSeconds { get; set; }
+
+        [Outlet]
         AppKit.NSButton StartStopButton { get; set; }
 
         [Outlet]
         AppKit.NSTextField TimerLabel { get; set; }
+
+        [Action ("SecondsEntered:")]
+        partial void SecondsEntered (Foundation.NSObject sender);
 
         [Action ("StartStopButtonClicked:")]
         partial void StartStopButtonClicked (Foundation.NSObject sender);
         
         void ReleaseDesignerOutlets ()
         {
-            if (TimerLabel != null) {
-                TimerLabel.Dispose ();
-                TimerLabel = null;
+            if (InputSeconds != null) {
+                InputSeconds.Dispose ();
+                InputSeconds = null;
             }
 
             if (StartStopButton != null) {
                 StartStopButton.Dispose ();
                 StartStopButton = null;
+            }
+
+            if (TimerLabel != null) {
+                TimerLabel.Dispose ();
+                TimerLabel = null;
             }
         }
     }

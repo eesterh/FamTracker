@@ -9,7 +9,8 @@ namespace FamTracker
     public partial class ViewController : NSViewController
     {
         Timer MainTimer;
-        int TimeLeft = 0; // seconds
+        int TimeGoal = 60; // seconds
+        int counter = 0;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -19,26 +20,28 @@ namespace FamTracker
         {
             base.ViewDidLoad();
 
+            TimeGoal = Int32.Parse(InputSeconds.StringValue);
 
             // Fire the timer once a second
             MainTimer = new Timer(1000);
             MainTimer.Elapsed += (sender, e) => {
-                TimeLeft++;
+                counter++;
                 // Format the remaining time nicely for the label
-                TimeSpan time = TimeSpan.FromSeconds(TimeLeft);
+                TimeSpan time = TimeSpan.FromSeconds(counter);
                 string timeString = time.ToString(@"mm\:ss");
-                InvokeOnMainThread(() => {
+                InvokeOnMainThread(() =>
+                {
                     //We want to interact with the UI from a different thread,
                     // so we must invoke this change on the main thread
                     TimerLabel.StringValue = timeString;
                 });
 
-                // If 1 minutes have passed
-                if (TimeLeft == 60)
+                // If goal entered has passed
+                if (TimeGoal == counter)
                 {
                     // Stop the timer and reset
                     MainTimer.Stop();
-                    TimeLeft = 0;
+                    counter = 0;
                     InvokeOnMainThread(() => {
                         // Reset the UI
                         TimerLabel.StringValue = "0:00";
@@ -47,7 +50,7 @@ namespace FamTracker
 
                         NSAlert alert = new NSAlert();
                         alert.AlertStyle = NSAlertStyle.Informational;
-                        alert.MessageText = "1 Minutes elapsed! Take a minute break.";
+                        alert.MessageText = InputSeconds.StringValue + " seconds elapsed!";
                         // Display the NSAlert from the current view
                         alert.BeginSheet(View.Window);
                     });
@@ -71,7 +74,7 @@ namespace FamTracker
         partial void StartStopButtonClicked(NSObject sender)
         {
             // If the timer is running, we want to stop it,
-            // otherwise we want to start it
+            // otherwise we want to start in
             if (MainTimer.Enabled)
             {
                 MainTimer.Stop();
@@ -82,6 +85,26 @@ namespace FamTracker
                 MainTimer.Start();
                 StartStopButton.Title = "Stop";
             }
+        }
+
+        partial void SecondsEntered(Foundation.NSObject sender)
+        {
+       //     String timeEntered = InputSeconds.
+         //       .ToString();
+
+            NSAlert alert = new NSAlert();
+            alert.AlertStyle = NSAlertStyle.Informational;
+            alert.MessageText = InputSeconds.StringValue + " Entered in Field!";
+            // Display the NSAlert from the current view
+            alert.BeginSheet(View.Window);
+
+            //  TimeLeft = new Integer(timeEntered);
+
+            TimeGoal = Int32.Parse(InputSeconds.StringValue);
+            TimerLabel.StringValue = TimeGoal.ToString();
+
+           // sender.ToString();
+
         }
 
     }
