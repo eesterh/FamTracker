@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.MapKitIBPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +23,11 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                                        <menuItem title="DEBUG" state="on" keyEquivalent="," id="BOF-NM-1cW">
+                                            <connections>
+                                                <segue destination="qPX-eS-LdP" kind="show" id="fWw-3B-PR3"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -650,7 +655,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController id="B8D-0N-5wS" customClass="View" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -661,12 +666,74 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="JFj-oF-J62" kind="relationship" relationship="window.shadowedContentViewController" id="lLA-8I-LUs"/>
+                        <segue destination="JFj-oF-J62" kind="relationship" relationship="window.shadowedContentViewController" id="LwJ-5W-wLJ"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="70" y="-137"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="cot-es-Dus">
+            <objects>
+                <windowController id="qPX-eS-LdP" sceneMemberID="viewController">
+                    <window key="window" title="DEBUG" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="aBu-6t-mUj">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="qPX-eS-LdP" id="9fk-yl-il2"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="DlJ-Ek-7R7" kind="relationship" relationship="window.shadowedContentViewController" id="pBv-99-C9D"/>
+                    </connections>
+                </windowController>
+                <customObject id="wjk-4M-X0l" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="652" y="-137"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eLb-cp-pEm">
+            <objects>
+                <viewController id="DlJ-Ek-7R7" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" id="E5k-dO-8Sa">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-yW-YNZ">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="JCh-Oh-4hS">
+                                    <rect key="frame" x="1" y="1" width="463" height="253"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView ambiguous="YES" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="pkF-Gc-Qu8">
+                                            <rect key="frame" x="0.0" y="0.0" width="463" height="253"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="463" height="253"/>
+                                            <size key="maxSize" width="478" height="10000000"/>
+                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="47o-sH-wrd">
+                                    <rect key="frame" x="1" y="254" width="463" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Pz7-zH-n7A">
+                                    <rect key="frame" x="464" y="1" width="15" height="253"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Ls3-BP-XRW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1282" y="-166"/>
         </scene>
         <!--Timers-->
         <scene sceneID="hIz-AP-VOD">
@@ -690,14 +757,14 @@
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vkY-db-jbO">
                                 <rect key="frame" x="110" y="260" width="63" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="60" drawsBackground="YES" id="Ekt-jr-RZQ">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="59" drawsBackground="YES" id="Ekt-jr-RZQ">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="KVk-Xv-9El"/>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="SecondsEntered:" target="XfG-lQ-9wD" id="V32-Ij-Ey4"/>
+                                    <action selector="progressRunning:" target="XfG-lQ-9wD" id="jkq-nU-200"/>
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rPc-Oj-wjC">
@@ -718,9 +785,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkA-l1-mg1">
-                                <rect key="frame" x="209" y="148" width="63" height="77"/>
+                                <rect key="frame" x="20" y="146" width="451" height="77"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="60" drawsBackground="YES" id="xeX-pO-oWE">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="00:59" drawsBackground="YES" id="xeX-pO-oWE">
                                     <font key="font" size="42" name="Georgia"/>
                                     <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -744,7 +811,7 @@
         <!--Main-->
         <scene sceneID="ivK-zS-3RJ">
             <objects>
-                <tabViewController title="Main" selectedTabViewItemIndex="1" id="JFj-oF-J62" sceneMemberID="viewController">
+                <tabViewController title="Main" selectedTabViewItemIndex="0" id="JFj-oF-J62" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem id="bdj-UY-0vW"/>
                         <tabViewItem id="vhg-uC-Qty"/>
@@ -773,7 +840,7 @@
         <!--iCloud-->
         <scene sceneID="CoC-Tz-Xa9">
             <objects>
-                <splitViewController title="iCloud" id="Wg3-ra-Tdg" sceneMemberID="viewController">
+                <splitViewController title="iCloud" id="Wg3-ra-Tdg" customClass="Viewcontroller" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem id="8sP-81-dBt"/>
                         <splitViewItem id="21U-5b-Emc"/>
@@ -795,17 +862,17 @@
             </objects>
             <point key="canvasLocation" x="-58" y="782"/>
         </scene>
-        <!--Credentials-->
+        <!--ViewController-->
         <scene sceneID="vqE-tQ-cZI">
             <objects>
-                <viewController title="Credentials" id="mm7-Pk-gKD" sceneMemberID="viewController">
+                <viewController title="ViewController" id="mm7-Pk-gKD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="OLn-CE-5kk">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMv-Bo-tdk">
                                 <rect key="frame" x="32" y="255" width="83" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Username: " id="zZI-TJ-c9U">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -814,7 +881,7 @@
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-c5-UVz">
                                 <rect key="frame" x="34" y="216" width="70" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Password: " id="saW-e4-yKf">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -822,51 +889,47 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mst-iK-5XX">
-                                <rect key="frame" x="106" y="253" width="148" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VHw-Kn-IXe">
+                                <rect key="frame" x="106" y="253" width="179" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="&lt;Enter icloud username&gt;" drawsBackground="YES" id="VHw-Kn-IXe">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="UsernameEntered:" target="mm7-Pk-gKD" id="Tna-Ik-11n"/>
+                                </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e8Z-hW-Zj3">
-                                <rect key="frame" x="106" y="214" width="148" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VnW-Re-Muy">
+                                <rect key="frame" x="106" y="214" width="179" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="bezel" placeholderString="&lt;Enter icloud password&gt;" drawsBackground="YES" id="VnW-Re-Muy">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="PasswordEntered:" target="mm7-Pk-gKD" id="4kr-Oq-v5p"/>
+                                </connections>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lZ3-go-p6y">
-                                <rect key="frame" x="266" y="252" width="76" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2i6-id-5IK" id="cjh-pV-VCW">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="XzO-N9-fa4">
-                                        <items>
-                                            <menuItem title="Item 1" state="on" id="2i6-id-5IK"/>
-                                            <menuItem title="Item 2" id="JKH-cQ-wpa"/>
-                                            <menuItem title="Item 3" id="b6a-Tk-NPK"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                            </popUpButton>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Th-m0-31S">
-                                <rect key="frame" x="288" y="60" width="95" height="32"/>
+                                <rect key="frame" x="295" y="158" width="95" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vUV-yM-fAC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="UserCredentialsEntered:" target="mm7-Pk-gKD" id="LdE-Ij-pan"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <connections>
-                            <outlet property="UsernameEntered" destination="mst-iK-5XX" id="5hF-5o-MHP"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="Password" destination="e8Z-hW-Zj3" id="10K-S1-xQm"/>
+                        <outlet property="UserCredentialsConfirmed" destination="3Th-m0-31S" id="JEu-dU-haO"/>
+                        <outlet property="Username" destination="mst-iK-5XX" id="1Jh-j3-BmL"/>
+                    </connections>
                 </viewController>
                 <customObject id="pUK-v4-OyD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -875,7 +938,7 @@
         <!--Tab View Controller-->
         <scene sceneID="R4b-uo-xVj">
             <objects>
-                <tabViewController selectedTabViewItemIndex="2" id="n9H-Cq-qtH" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="n9H-Cq-qtH" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem identifier="" id="hi0-kP-YL8"/>
                         <tabViewItem identifier="" id="pYe-Gz-oxb"/>
@@ -904,7 +967,7 @@
         <!--Messages-->
         <scene sceneID="iGj-eh-AXT">
             <objects>
-                <viewController title="Messages" id="ESz-em-vxA" sceneMemberID="viewController">
+                <viewController title="Messages" id="ESz-em-vxA" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="Wp0-ZY-0Pa">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -927,14 +990,20 @@
             </objects>
             <point key="canvasLocation" x="1357" y="2465"/>
         </scene>
-        <!--DB-->
+        <!--Maps-->
         <scene sceneID="YbT-17-x4e">
             <objects>
                 <customObject id="BtU-XW-peL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController title="DB" id="6xH-tS-byZ" sceneMemberID="viewController">
+                <viewController title="Maps" id="6xH-tS-byZ" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="Mau-R3-14m">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <mapView fixedFrame="YES" mapType="hybrid" pitchEnabled="NO" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Byc-ll-Kv7">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
                     </view>
                 </viewController>
             </objects>
@@ -943,7 +1012,7 @@
         <!--WhatsApp-->
         <scene sceneID="K7N-9S-vjo">
             <objects>
-                <viewController title="WhatsApp" id="n1W-eB-WK7" sceneMemberID="viewController">
+                <viewController title="WhatsApp" id="n1W-eB-WK7" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="kPn-TB-AWf">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

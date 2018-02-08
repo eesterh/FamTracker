@@ -9,59 +9,92 @@ using System.CodeDom.Compiler;
 
 namespace FamTracker
 {
-	[Register ("ViewController")]
-	partial class ViewController
-	{
-		[Outlet]
-		AppKit.NSProgressIndicator ContProgressBar { get; set; }
+    [Register ("ViewController")]
+    partial class ViewController
+    {
+        [Outlet]
+        AppKit.NSProgressIndicator ContProgressBar { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField InputSeconds { get; set; }
+        [Outlet]
+        AppKit.NSTextField InputSeconds { get; set; }
 
-		[Outlet]
-		AppKit.NSProgressIndicator ProgressBar { get; set; }
+        [Outlet]
+        AppKit.NSTextField Password { get; set; }
 
-		[Outlet]
-		AppKit.NSButton StartStopButton { get; set; }
+        [Outlet]
+        AppKit.NSProgressIndicator ProgressBar { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField TimerLabel { get; set; }
+        [Outlet]
+        AppKit.NSButton StartStopButton { get; set; }
 
-		[Action ("progressRunning:")]
-		partial void progressRunning (Foundation.NSObject sender);
+        [Outlet]
+        AppKit.NSTextField TimerLabel { get; set; }
 
-		[Action ("SecondsEntered:")]
-		partial void SecondsEntered (Foundation.NSObject sender);
+        [Outlet]
+        AppKit.NSButton UserCredentialsConfirmed { get; set; }
 
-		[Action ("StartStopButtonClicked:")]
-		partial void StartStopButtonClicked (Foundation.NSObject sender);
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (InputSeconds != null) {
-				InputSeconds.Dispose ();
-				InputSeconds = null;
-			}
+        [Outlet]
+        AppKit.NSTextField Username { get; set; }
 
-			if (StartStopButton != null) {
-				StartStopButton.Dispose ();
-				StartStopButton = null;
-			}
+        [Action ("PasswordEntered:")]
+        partial void PasswordEntered (Foundation.NSObject sender);
 
-			if (TimerLabel != null) {
-				TimerLabel.Dispose ();
-				TimerLabel = null;
-			}
+        [Action ("progressRunning:")]
+        partial void progressRunning (Foundation.NSObject sender);
 
-			if (ProgressBar != null) {
-				ProgressBar.Dispose ();
-				ProgressBar = null;
-			}
+        [Action ("SecondsEntered:")]
+        partial void SecondsEntered (Foundation.NSObject sender);
 
-			if (ContProgressBar != null) {
-				ContProgressBar.Dispose ();
-				ContProgressBar = null;
-			}
-		}
-	}
+        [Action ("StartStopButtonClicked:")]
+        partial void StartStopButtonClicked (Foundation.NSObject sender);
+
+        [Action ("UserCredentialsEntered:")]
+        partial void UserCredentialsEntered (Foundation.NSObject sender);
+
+        [Action ("UsernameEntered:")]
+        partial void UsernameEntered (Foundation.NSObject sender);
+        
+        void ReleaseDesignerOutlets ()
+        {
+            if (ContProgressBar != null) {
+                ContProgressBar.Dispose ();
+                ContProgressBar = null;
+            }
+
+            if (InputSeconds != null) {
+                InputSeconds.Dispose ();
+                InputSeconds = null;
+            }
+
+            if (ProgressBar != null) {
+                ProgressBar.Dispose ();
+                ProgressBar = null;
+            }
+
+            if (StartStopButton != null) {
+                StartStopButton.Dispose ();
+                StartStopButton = null;
+            }
+
+            if (TimerLabel != null) {
+                TimerLabel.Dispose ();
+                TimerLabel = null;
+            }
+
+            if (Username != null) {
+                Username.Dispose ();
+                Username = null;
+            }
+
+            if (Password != null) {
+                Password.Dispose ();
+                Password = null;
+            }
+
+            if (UserCredentialsConfirmed != null) {
+                UserCredentialsConfirmed.Dispose ();
+                UserCredentialsConfirmed = null;
+            }
+        }
+    }
 }

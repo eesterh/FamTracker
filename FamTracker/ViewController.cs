@@ -8,9 +8,10 @@ namespace FamTracker
 {
     public partial class ViewController : NSViewController
     {
-        Timer MainTimer;
-        int TimeGoal = 60; // seconds
-        int counter = 0;
+        // Global variables
+        Timer MainTimer = new Timer(1000); // one second
+        int TimeGoal = 59; // seconds
+        int counter;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -19,13 +20,35 @@ namespace FamTracker
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+        }
 
+        public override NSObject RepresentedObject
+        {
+            get { return base.RepresentedObject; }
+            set => base.RepresentedObject = value;
+        }
+
+        partial void StartStopButtonClicked(NSObject sender)
+        {
+            // If the timer is running, we want to stop it, otherwise we want to start it
+            if (MainTimer.Enabled)
+            {
+                MainTimer.Stop();
+                StartStopButton.Title = "Start";
+            }
+            else
+            {
+                MainTimer.Start();
+                StartStopButton.Title = "Stop";
+                RunTimer();
+            }
+        }
+
+        public void RunTimer()
+        {
             TimeGoal = Int32.Parse(InputSeconds.StringValue);
 
             counter = 0;
-
-            // Fire the timer once a second
-            MainTimer = new Timer(1000);
             MainTimer.Elapsed += (sender, e) => {
                 counter++;
 
@@ -39,7 +62,7 @@ namespace FamTracker
                     TimerLabel.StringValue = timeString;
                 });
 
-               // ProgressBar.IncrementBy(1); - This causes the following code to be ignored.... need to figure out how to init correctly I think
+                // ProgressBar.IncrementBy(1); - This causes the following code to be ignored.... need to figure out how to init correctly I think
 
 
                 // If goal entered has passed
@@ -55,43 +78,17 @@ namespace FamTracker
                         StartStopButton.Title = "Start";
                         // Set the style and message text
 
-                        NSAlert alert = new NSAlert();
-                        alert.AlertStyle = NSAlertStyle.Informational;
-                        alert.MessageText = InputSeconds.StringValue + " seconds elapsed!";
+                        NSAlert alert = new NSAlert
+                        {
+                            AlertStyle = NSAlertStyle.Informational,
+                            MessageText = InputSeconds.StringValue + " seconds elapsed!"
+                        };
                         // Display the NSAlert from the current view
                         alert.BeginSheet(View.Window);
                     });
                 }
             };
-        }
 
-        public override NSObject RepresentedObject
-        {
-            get
-            {
-                return base.RepresentedObject;
-            }
-            set
-            {
-                base.RepresentedObject = value;
-                // Update the view, if already loaded.
-            }
-        }
-
-        partial void StartStopButtonClicked(NSObject sender)
-        {
-            // If the timer is running, we want to stop it,
-            // otherwise we want to start in
-            if (MainTimer.Enabled)
-            {
-                MainTimer.Stop();
-                StartStopButton.Title = "Start";
-            }
-            else
-            {
-                MainTimer.Start();
-                StartStopButton.Title = "Stop";
-            }
         }
 
         partial void SecondsEntered(Foundation.NSObject sender)
@@ -105,6 +102,48 @@ namespace FamTracker
             ProgressBar.MaxValue = TimeGoal;
 
         }
+
+        partial void UsernameEntered(Foundation.NSObject sender)
+        {
+            // make sure email format username entered
+            // FUTURE: Drop down with stored usernames in plist file
+
+                String user = Username.StringValue;
+        }
+
+        partial void PasswordEntered(Foundation.NSObject sender)
+        {
+
+            // MAke sure value entered as password
+            String pwd = Password.StringValue;
+        }
+
+        partial void UserCredentialsEntered(Foundation.NSObject sender)
+        {
+            
+            InvokeOnMainThread(() =>
+            {
+                // Reset the UI
+                NSAlert alert = new NSAlert
+                {
+                    AlertStyle = NSAlertStyle.Informational,
+                    MessageText = "U: " + Username.StringValue + " P: " + Password.StringValue + " logging on..."
+                };
+                // Display the NSAlert from the current view
+                alert.BeginSheet(View.Window);
+            });
+
+
+            // Trigger to connect to try and connect to iCloud
+
+
+
+            // Passcode
+
+            // Do magic
+
+        }
+
 
     }
 }
