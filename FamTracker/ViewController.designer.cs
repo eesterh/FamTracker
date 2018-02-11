@@ -16,6 +16,9 @@ namespace FamTracker
         AppKit.NSProgressIndicator ContProgressBar { get; set; }
 
         [Outlet]
+        AppKit.NSTextView DebugWriter { get; set; }
+
+        [Outlet]
         AppKit.NSTextField InputSeconds { get; set; }
 
         [Outlet]
@@ -23,6 +26,12 @@ namespace FamTracker
 
         [Outlet]
         AppKit.NSProgressIndicator ProgressBar { get; set; }
+
+        [Outlet]
+        AppKit.NSButton SQL { get; set; }
+
+        [Outlet]
+        AppKit.NSTextView SQL_TextView { get; set; }
 
         [Outlet]
         AppKit.NSButton StartStopButton { get; set; }
@@ -41,6 +50,9 @@ namespace FamTracker
 
         [Action ("progressRunning:")]
         partial void progressRunning (Foundation.NSObject sender);
+
+        [Action ("RunSQL:")]
+        partial void RunSQL (Foundation.NSObject sender);
 
         [Action ("SecondsEntered:")]
         partial void SecondsEntered (Foundation.NSObject sender);
@@ -61,14 +73,34 @@ namespace FamTracker
                 ContProgressBar = null;
             }
 
+            if (SQL_TextView != null) {
+                SQL_TextView.Dispose ();
+                SQL_TextView = null;
+            }
+
+            if (DebugWriter != null) {
+                DebugWriter.Dispose ();
+                DebugWriter = null;
+            }
+
             if (InputSeconds != null) {
                 InputSeconds.Dispose ();
                 InputSeconds = null;
             }
 
+            if (Password != null) {
+                Password.Dispose ();
+                Password = null;
+            }
+
             if (ProgressBar != null) {
                 ProgressBar.Dispose ();
                 ProgressBar = null;
+            }
+
+            if (SQL != null) {
+                SQL.Dispose ();
+                SQL = null;
             }
 
             if (StartStopButton != null) {
@@ -81,19 +113,14 @@ namespace FamTracker
                 TimerLabel = null;
             }
 
-            if (Username != null) {
-                Username.Dispose ();
-                Username = null;
-            }
-
-            if (Password != null) {
-                Password.Dispose ();
-                Password = null;
-            }
-
             if (UserCredentialsConfirmed != null) {
                 UserCredentialsConfirmed.Dispose ();
                 UserCredentialsConfirmed = null;
+            }
+
+            if (Username != null) {
+                Username.Dispose ();
+                Username = null;
             }
         }
     }

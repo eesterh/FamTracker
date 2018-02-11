@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Timers;
+using Mono.Data.Sqlite;
+using System.IO;
 
 using AppKit;
 using Foundation;
@@ -13,6 +15,8 @@ namespace FamTracker
         int TimeGoal = 59; // seconds
         int counter;
 
+        String sql_result = "";
+
         public ViewController(IntPtr handle) : base(handle)
         {
         }
@@ -20,6 +24,8 @@ namespace FamTracker
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+
         }
 
         public override NSObject RepresentedObject
@@ -49,7 +55,8 @@ namespace FamTracker
             TimeGoal = Int32.Parse(InputSeconds.StringValue);
 
             counter = 0;
-            MainTimer.Elapsed += (sender, e) => {
+            MainTimer.Elapsed += (sender, e) =>
+            {
                 counter++;
 
                 // Format the remaining time nicely for the label
@@ -93,7 +100,7 @@ namespace FamTracker
 
         partial void SecondsEntered(Foundation.NSObject sender)
         {
-       
+
             // Update new goal
             TimeGoal = Int32.Parse(InputSeconds.StringValue);
             TimerLabel.StringValue = "0:00";
@@ -108,7 +115,7 @@ namespace FamTracker
             // make sure email format username entered
             // FUTURE: Drop down with stored usernames in plist file
 
-                String user = Username.StringValue;
+            String user = Username.StringValue;
         }
 
         partial void PasswordEntered(Foundation.NSObject sender)
@@ -120,7 +127,7 @@ namespace FamTracker
 
         partial void UserCredentialsEntered(Foundation.NSObject sender)
         {
-            
+
             InvokeOnMainThread(() =>
             {
                 // Reset the UI
@@ -134,6 +141,12 @@ namespace FamTracker
             });
 
 
+            // NSTextView tv =  new NSTextView();
+
+            NSAttributedString text = new NSAttributedString("U: " + Username.StringValue + " P: " + Password.StringValue + " logging on...");
+
+   
+          
             // Trigger to connect to try and connect to iCloud
 
 
@@ -144,6 +157,112 @@ namespace FamTracker
 
         }
 
+        partial void RunSQL(Foundation.NSObject sender)
+        {
 
+            SqliteConnection con;
+            SqliteCommand command;
+            SqliteDataReader reader;
+            NSAlert alert;
+
+            try
+            {
+                const string DBNAME = "Manifest.db";
+                //      string B_PATH = ""; // "Library/MobileSync/Backup/Manifest.db";
+
+                string gPath = Path.Combine(
+                    System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
+                    DBNAME);
+                Path.GetFullPath(gPath);
+
+                //gPath = Path.Combine(gPath, DBNAME);
+                // Directory.
+                if (!File.Exists(gPath))
+                {
+
+                    alert = new NSAlert
+                    {
+                        AlertStyle = NSAlertStyle.Critical,
+                        MessageText =
+                            "File does not exist:    " + gPath +
+                            "\nPath.FullPath= " + Path.GetFullPath(gPath) +
+                            "\nPath.DirectoryName= " + Path.GetDirectoryName(gPath) +
+                                                      "\nsdfsd= " + Path.GetFileName(gPath)
+
+                    };
+                    alert.BeginSheet(View.Window);
+                }
+                // gPath = "Data Source=" + gPath + "; Version=3; Read Only=True";
+                // When do we use Version = 3 tag?
+
+
+                gPath = "Data Source=" + gPath + "; Read Only=True";
+
+                con = new SqliteConnection(gPath);
+                con.Open();
+                command = new SqliteCommand();
+                command.CommandText = "select fileID, domain, relativePath from Files where relativePath like '%db%'";
+                command.Connection = con;
+
+                reader = command.ExecuteReader();
+
+                int cntr = 0;
+                sql_result = "";
+
+                //reader.
+                while (reader.Read())
+                {
+                    sql_result +=
+                        "\nFileID: " + reader.GetString(0) +
+                                           "DOMAIN:  " + reader.GetString(1) +
+                                           "R_PATH:  " + reader.GetString(2);
+                    if (true)
+                    {
+                        //SQL_TextView.BeginDocument();
+                        //SQL_TextView.TextStorage.Append();
+
+                       // SQL_TextView.SetTextColor(NSColor.White, new NSRange(0, 10000));
+                        NSAttributedString text = new NSAttributedString(sql_result);
+                        SQL_TextView.TextStorage.Append(text);
+                        //DebugWriter.TextStorage.Append(text);
+                        SQL_TextView.ScrollRangeToVisible(new NSRange(0, text.Length));
+
+                    }
+                    //String blah1 = reader["flags_"].ToString();
+                    //String blah2 = reader["file_"].ToString();
+                    cntr++;
+                    if (cntr >= 3)
+                    {
+                        break;
+                    }
+                }
+                reader.Close();
+                command.Dispose();
+                con.Close();
+
+               /* alert = new NSAlert
+                {
+                    AlertStyle = NSAlertStyle.Informational,
+                    MessageText = "READ DATA= " + sql_result
+                };
+                alert.BeginSheet(View.Window);   */
+            }
+            catch (Exception e)
+            {
+                alert = new NSAlert
+                {
+                    AlertStyle = NSAlertStyle.Critical,
+                    MessageText = "\nEXCEPTION: \n" + e.Message + "\nSOURCE:   \n" + e.Source +
+                                                     "\nDETAIL: \n" + e.ToString()
+                };
+                alert.BeginSheet(View.Window);
+            }
+            finally
+            {
+                // if (command != null) command.Dispose();
+                // if (reader != null) reader.Close();
+                // if (con != null) con.Close();
+            }
+        }
     }
 }
