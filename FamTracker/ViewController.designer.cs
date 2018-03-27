@@ -16,7 +16,7 @@ namespace FamTracker
         AppKit.NSProgressIndicator ContProgressBar { get; set; }
 
         [Outlet]
-        AppKit.NSTextView DebugWriter { get; set; }
+        AppKit.NSTextView Debug_TextView { get; set; }
 
         [Outlet]
         AppKit.NSTextField InputSeconds { get; set; }
@@ -68,19 +68,19 @@ namespace FamTracker
         
         void ReleaseDesignerOutlets ()
         {
-            if (ContProgressBar != null) {
-                ContProgressBar.Dispose ();
-                ContProgressBar = null;
-            }
-
             if (SQL_TextView != null) {
                 SQL_TextView.Dispose ();
                 SQL_TextView = null;
             }
 
-            if (DebugWriter != null) {
-                DebugWriter.Dispose ();
-                DebugWriter = null;
+            if (ContProgressBar != null) {
+                ContProgressBar.Dispose ();
+                ContProgressBar = null;
+            }
+
+            if (Debug_TextView != null) {
+                Debug_TextView.Dispose ();
+                Debug_TextView = null;
             }
 
             if (InputSeconds != null) {

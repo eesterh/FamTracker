@@ -6,6 +6,7 @@ using System.IO;
 using AppKit;
 using Foundation;
 
+
 namespace FamTracker
 {
     public partial class ViewController : NSViewController
@@ -16,6 +17,11 @@ namespace FamTracker
         int counter;
 
         String sql_result = "";
+        String debug_result = "";
+
+        OutputWriter sql_write;
+        OutputWriter debug_write;
+
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -25,6 +31,8 @@ namespace FamTracker
         {
             base.ViewDidLoad();
 
+            sql_write = new OutputWriter(SQL_TextView);
+            debug_write = new OutputWriter(Debug_TextView);
 
         }
 
@@ -167,6 +175,7 @@ namespace FamTracker
 
             try
             {
+                
                 const string DBNAME = "Manifest.db";
                 //      string B_PATH = ""; // "Library/MobileSync/Backup/Manifest.db";
 
@@ -179,34 +188,29 @@ namespace FamTracker
                 // Directory.
                 if (!File.Exists(gPath))
                 {
-
-                    alert = new NSAlert
-                    {
-                        AlertStyle = NSAlertStyle.Critical,
-                        MessageText =
-                            "File does not exist:    " + gPath +
+            /*        debug_write.Append("File does not exist: " + gPath +
                             "\nPath.FullPath= " + Path.GetFullPath(gPath) +
                             "\nPath.DirectoryName= " + Path.GetDirectoryName(gPath) +
-                                                      "\nsdfsd= " + Path.GetFileName(gPath)
-
-                    };
-                    alert.BeginSheet(View.Window);
-                }
+                                                      "\nFileName= " + Path.GetFileName(gPath));
+              */  }
                 // gPath = "Data Source=" + gPath + "; Version=3; Read Only=True";
                 // When do we use Version = 3 tag?
 
 
                 gPath = "Data Source=" + gPath + "; Read Only=True";
 
+      //          debug_write.Append("SQL: ");
                 con = new SqliteConnection(gPath);
                 con.Open();
+      //          debug_write.Append("<O>");
                 command = new SqliteCommand();
                 command.CommandText = "select fileID, domain, relativePath from Files where relativePath like '%db%'";
                 command.Connection = con;
 
                 reader = command.ExecuteReader();
-
-                int cntr = 0;
+              
+      //          debug_write.Append("<E>");
+      
                 sql_result = "";
 
                 //reader.
@@ -214,38 +218,25 @@ namespace FamTracker
                 {
                     sql_result +=
                         "\nFileID: " + reader.GetString(0) +
-                                           "DOMAIN:  " + reader.GetString(1) +
-                                           "R_PATH:  " + reader.GetString(2);
-                    if (true)
-                    {
-                        //SQL_TextView.BeginDocument();
-                        //SQL_TextView.TextStorage.Append();
-
-                       // SQL_TextView.SetTextColor(NSColor.White, new NSRange(0, 10000));
-                        NSAttributedString text = new NSAttributedString(sql_result);
-                        SQL_TextView.TextStorage.Append(text);
-                        //DebugWriter.TextStorage.Append(text);
-                        SQL_TextView.ScrollRangeToVisible(new NSRange(0, text.Length));
-
-                    }
-                    //String blah1 = reader["flags_"].ToString();
-                    //String blah2 = reader["file_"].ToString();
-                    cntr++;
-                    if (cntr >= 3)
-                    {
-                        break;
-                    }
+                                           "\nDOMAIN:  " + reader.GetString(1) +
+                                           "\nR_PATH:  " + reader.GetString(2);
                 }
+              //  debug_write.Append("<R>\n");
+
+             //   sql_write.Append(sql_result);
+                sql_write.Append("\n\nSIZE: "+ sql_write.SizeOfBuffer().ToString() + "\n\n");
+
+           //     debug_write.Append("SQL executed!\n");
+
+                if (Debug_TextView is null)
+                {
+                    sql_write.Append("DW IS NULL\n\n\n");
+                }
+  
+
                 reader.Close();
                 command.Dispose();
                 con.Close();
-
-               /* alert = new NSAlert
-                {
-                    AlertStyle = NSAlertStyle.Informational,
-                    MessageText = "READ DATA= " + sql_result
-                };
-                alert.BeginSheet(View.Window);   */
             }
             catch (Exception e)
             {
@@ -256,6 +247,7 @@ namespace FamTracker
                                                      "\nDETAIL: \n" + e.ToString()
                 };
                 alert.BeginSheet(View.Window);
+               // debug_write.Append(e.Message);
             }
             finally
             {
@@ -264,5 +256,10 @@ namespace FamTracker
                 // if (con != null) con.Close();
             }
         }
+
+        partial void switchDebug(Foundation.NSObject sender)
+        {
+        }
+
     }
 }
